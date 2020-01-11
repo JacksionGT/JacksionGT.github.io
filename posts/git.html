@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+    <title>使用Git Bash进行Git 操作 | 墨荷清香</title>
+    <meta name="description" content="作对的事，而不只是把事作对。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="使用Git Bash进行Git 操作 | 墨荷清香" />
+    <meta property="og:site_name" content="使用Git Bash进行Git 操作 | 墨荷清香" />
+    <meta property="og:locale" content="zh-CN" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="使用Git Bash进行Git 操作 | 墨荷清香" />
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <link rel="preload" href="/assets/css/0.styles.e864259d.css" as="style"><link rel="preload" href="/assets/js/app.9d3769a1.js" as="script"><link rel="preload" href="/assets/js/1.72ee6602.js" as="script"><link rel="preload" href="/assets/js/14.1ccc8c33.js" as="script"><link rel="preload" href="/assets/js/5.20baaa8b.js" as="script"><link rel="preload" href="/assets/js/7.4033df73.js" as="script"><link rel="preload" href="/assets/js/9.021ec998.js" as="script"><link rel="preload" href="/assets/js/6.0dbd97d1.js" as="script"><link rel="preload" href="/assets/js/23.5962dad2.js" as="script"><link rel="preload" href="/assets/js/13.2ece30a8.js" as="script"><link rel="preload" href="/assets/js/15.ecd9751b.js" as="script"><link rel="prefetch" href="/assets/js/10.9611c961.js"><link rel="prefetch" href="/assets/js/11.cbe7f66e.js"><link rel="prefetch" href="/assets/js/12.43bea7b9.js"><link rel="prefetch" href="/assets/js/16.54161252.js"><link rel="prefetch" href="/assets/js/17.542f0f73.js"><link rel="prefetch" href="/assets/js/18.fa352c96.js"><link rel="prefetch" href="/assets/js/19.ed6ec781.js"><link rel="prefetch" href="/assets/js/20.6e365bd5.js"><link rel="prefetch" href="/assets/js/21.a667f577.js"><link rel="prefetch" href="/assets/js/22.7b5d6b22.js"><link rel="prefetch" href="/assets/js/24.5604ebfa.js"><link rel="prefetch" href="/assets/js/25.cb341836.js"><link rel="prefetch" href="/assets/js/26.362a228c.js"><link rel="prefetch" href="/assets/js/4.deb13c5e.js"><link rel="prefetch" href="/assets/js/8.88383a4c.js"><link rel="prefetch" href="/assets/js/search.5f630cd3.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e864259d.css">
+  </head>
+  <body>
+    <div id="loader-wrapper" style="display: none;opacity:0">
+      <div id="loader"></div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+    <div id="app" data-server-rendered="true"><div style="height:100%;" data-v-80d5f2bc><section class="el-container main-container" data-v-80d5f2bc><aside class="el-aside menu" style="width:auto;" data-v-67e96130 data-v-80d5f2bc><ul role="menubar" class="menu-wrap el-menu" style="background-color:;" data-v-67e96130><li data-v-67e96130><div class="brand-wrap" style="background-image:url(/brand.jpg);" data-v-67e96130><div class="brand" data-v-67e96130><a href="/" class="avatar waves-effect waves-circle waves-light router-link-active" data-v-67e96130><img src="/avatar.jpg" data-v-67e96130></a> <hgroup class="introduce" data-v-67e96130><div class="nickname" data-v-67e96130>jacksion</div> <a title="superboy537@sina.com" class="mail" data-v-67e96130>superboy537@sina.com</a></hgroup></div></div></li> <li role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left:20px;color:;background-color:;" data-v-67e96130><i class="iconfont icon-home" data-v-67e96130></i> <span class="item-title" data-v-67e96130>主页</span></li> <li role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left:20px;color:;background-color:;" data-v-67e96130><i class="iconfont icon-biaoqian" data-v-67e96130></i> <span class="item-title" data-v-67e96130>标签分类</span></li> <li role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left:20px;color:;background-color:;" data-v-67e96130><i class="iconfont icon-wenzhang" data-v-67e96130></i> <span class="item-title" data-v-67e96130>时间归档</span></li> <li role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left:20px;color:;background-color:;" data-v-67e96130><i class="iconfont icon-github" data-v-67e96130></i> <span class="item-title" data-v-67e96130>Github</span></li> <li role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left:20px;color:;background-color:;" data-v-67e96130><i class="iconfont icon-aboutme" data-v-67e96130></i> <span class="item-title" data-v-67e96130>自我介绍</span></li></ul></aside> <section class="el-container container-warp" data-v-80d5f2bc><header id="topHeader" class="el-header top-header" style="height:60px;padding-left:260px;" data-v-1a942948 data-v-80d5f2bc><div class="header-warp el-row is-align-middle el-row--flex" data-v-1a942948><div class="el-col el-col-12 el-col-xs-7" data-v-1a942948><div class="el-row is-align-middle el-row--flex" data-v-1a942948><div class="el-col el-col-2" data-v-1a942948><button type="button" class="el-button el-button--primary is-circle" data-v-1a942948><!----><!----><span><i class="iconfont icon-caidan" data-v-1a942948></i></span></button></div></div></div> <div class="el-col el-col-20 el-col-xs-24" data-v-1a942948><div class="grid-content bg-purple-light" data-v-1a942948><div class="el-row is-justify-end is-align-middle el-row--flex" data-v-1a942948><div class="el-col el-col-13 el-col-xs-24 el-col-sm-21 el-col-md-17 el-col-lg-13" data-v-1a942948><div aria-haspopup="listbox" role="combobox" aria-owns="el-autocomplete-4011" class="el-autocomplete search-input" data-v-1a942948><div class="el-input el-input--small el-input--suffix"><!----><input type="text" autocomplete="off" valueKey="value" popperClass="search-popper" placeholder="搜搜看" fetchSuggestions="function () { [native code] }" debounce="300" placement="bottom-start" popperAppendToBody="true" value="" class="el-input__inner"><!----><span class="el-input__suffix"><span class="el-input__suffix-inner"><i class="el-input__icon el-icon-search search-ico" data-v-1a942948></i><!----></span><!----></span><!----></div><div role="region" class="el-autocomplete-suggestion el-popper search-popper" style="width:;display:none;"><div class="el-scrollbar"><div class="el-autocomplete-suggestion__wrap el-scrollbar__wrap el-scrollbar__wrap--hidden-default"><ul class="el-scrollbar__view el-autocomplete-suggestion__list"></ul></div><div class="el-scrollbar__bar is-horizontal"><div class="el-scrollbar__thumb" style="width:0;transform:translateX(0%);ms-transform:translateX(0%);webkit-transform:translateX(0%);"></div></div><div class="el-scrollbar__bar is-vertical"><div class="el-scrollbar__thumb" style="height:0;transform:translateY(0%);ms-transform:translateY(0%);webkit-transform:translateY(0%);"></div></div></div></div></div></div></div></div></div></div></header> <main class="el-main my-main" style="margin-left:240px;" data-v-105de776 data-v-80d5f2bc><div class="content-header index-header" data-v-60d87e45 data-v-105de776><div class="container fade-scale in" data-v-60d87e45><h1 id="conentHeader" class="title" data-v-60d87e45>使用Git Bash进行Git 操作</h1> <h5 class="subtitle" data-v-60d87e45>最后更新时间：2020-01-11 20:44:51</h5></div></div> <div data-v-95d4b5b2 data-v-105de776 data-v-105de776><div class="post-content el-row is-justify-center el-row--flex" data-v-95d4b5b2><div id="post-card" class="post-card post-sign el-col el-col-16 el-col-xs-24 el-col-sm-23 el-col-md-23 el-col-lg-16" data-v-95d4b5b2><div class="content__default" data-v-95d4b5b2><h2 id="使用git-bash进行git-操作"><a href="#使用git-bash进行git-操作" class="header-anchor">#</a> 使用Git Bash进行Git 操作</h2> <h3 id="查看当前文件副本状态"><a href="#查看当前文件副本状态" class="header-anchor">#</a> 查看当前文件副本状态</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> status
+On branch develop
+Your branch is up-to-date with <span class="token string">'origin/develop'</span><span class="token builtin class-name">.</span>
+Changes not staged <span class="token keyword">for</span> commit:
+  <span class="token punctuation">(</span>use <span class="token string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span>use <span class="token string">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes <span class="token keyword">in</span> working directory<span class="token punctuation">)</span>
+
+        modified:   test.txt
+
+no changes added to commit <span class="token punctuation">(</span>use <span class="token string">&quot;git add&quot;</span> and/or <span class="token string">&quot;git commit -a&quot;</span><span class="token punctuation">)</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h3 id="将文件添加至暂存区"><a href="#将文件添加至暂存区" class="header-anchor">#</a> 将文件添加至暂存区</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> <span class="token function">add</span> test.txt
+<span class="token comment"># 如果没有任何提示，当前命令操作成功</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="将文件从暂存区中移除"><a href="#将文件从暂存区中移除" class="header-anchor">#</a> 将文件从暂存区中移除</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> reset <span class="token function">head</span> test.txt
+Unstaged changes after reset:
+M       test.txt
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="恢复文件至最近一个版本的状态，并放弃更改"><a href="#恢复文件至最近一个版本的状态，并放弃更改" class="header-anchor">#</a> 恢复文件至最近一个版本的状态，并放弃更改</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> checkout test.txt
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="将暂存区文件提交至版本库"><a href="#将暂存区文件提交至版本库" class="header-anchor">#</a> 将暂存区文件提交至版本库</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> commit -m <span class="token string">'修改test文件'</span>
+<span class="token punctuation">[</span>develop <span class="token number">5902113</span><span class="token punctuation">]</span> 修改test文件
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">3</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>, <span class="token number">1</span> deletion<span class="token punctuation">(</span>-<span class="token punctuation">)</span>
+<span class="token comment"># commit命令只会提交暂存区的文件，未添加进暂存区的文件不会被commit命令提交</span>
+<span class="token comment"># ###########可以看到，提交后返回一些信息</span>
+<span class="token comment"># 当前是在哪个分支（develop）提交的 </span>
+<span class="token comment"># 本次提交的完整 SHA-1 # 校验和是什么（5902113）</span>
+<span class="token comment"># 以及在本次提交中，有多少文件修订过，多少行添改和删改过。</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="跳过暂存，直接将工作副本提交至版本库"><a href="#跳过暂存，直接将工作副本提交至版本库" class="header-anchor">#</a> 跳过暂存，直接将工作副本提交至版本库</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> commit -a -m <span class="token string">'added new benchmarks'</span>
+<span class="token punctuation">[</span>master 83e38c7<span class="token punctuation">]</span> added new benchmarks
+ <span class="token number">1</span> files changed, <span class="token number">5</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>
+
+<span class="token comment"># 似乎不会提交未纳入版本控制的文件</span>
+<span class="token comment"># eg:新建了一个foo.txt，没有添加进暂存区</span>
+<span class="token comment"># 那么commit -a将不会为foo.txt创建版本，也不会提交此文件</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="创建文件夹和文件"><a href="#创建文件夹和文件" class="header-anchor">#</a> 创建文件夹和文件</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 创建文件夹</span>
+$ <span class="token function">mkdir</span> .note
+<span class="token comment"># 在桌面GUI下，无法创建以“.”开头的文件夹和文件</span>
+
+<span class="token comment"># 创建文件</span>
+$ <span class="token function">touch</span> .gitignore
+
+<span class="token comment"># 查看文件</span>
+$ <span class="token function">cat</span> .gitignore
+<span class="token comment"># floders</span>
+.vs/
+
+<span class="token comment"># Git Bash下运行的命令有些与Linux命令名称一致，有些与Windows命令名称一致</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h3 id="文本比较"><a href="#文本比较" class="header-anchor">#</a> 文本比较</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> <span class="token function">diff</span>
+<span class="token function">diff</span> --git a/foo.txt b/foo.txt
+index 2974b83<span class="token punctuation">..</span>e8224ee <span class="token number">100644</span>
+--- a/foo.txt
++++ b/foo.txt
+@@ -1 +1,3 @@
+-add line <span class="token number">1</span>
+<span class="token punctuation">\</span> No newline at end of <span class="token function">file</span>
++----foo.txt
++add line <span class="token number">1</span>
++add line <span class="token number">2</span>
+<span class="token punctuation">\</span> No newline at end of <span class="token function">file</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h1 id="删除文件并移除版本控制"><a href="#删除文件并移除版本控制" class="header-anchor">#</a> 删除文件并移除版本控制</h1> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> <span class="token function">rm</span> foo.txt
+<span class="token function">rm</span> <span class="token string">'foo.txt'</span>
+
+$ <span class="token function">git</span> status
+On branch develop
+Your branch is ahead of <span class="token string">'origin/develop'</span> by <span class="token number">3</span> commits.
+  <span class="token punctuation">(</span>use <span class="token string">&quot;git push&quot;</span> to publish your <span class="token builtin class-name">local</span> commits<span class="token punctuation">)</span>
+Changes to be committed:
+  <span class="token punctuation">(</span>use <span class="token string">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="token punctuation">)</span>
+
+        deleted:    foo.txt
+
+$ <span class="token function">git</span> commit -m <span class="token string">'删除foo.txt'</span>
+<span class="token punctuation">[</span>develop fb06b92<span class="token punctuation">]</span> 删除foo.txt
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">3</span> deletions<span class="token punctuation">(</span>-<span class="token punctuation">)</span>
+ delete mode <span class="token number">100644</span> foo.txt
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h1 id="移除版本控制但不删除文件"><a href="#移除版本控制但不删除文件" class="header-anchor">#</a> 移除版本控制但不删除文件</h1> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">git</span> <span class="token function">rm</span> --cached bar.txt
+<span class="token function">rm</span> <span class="token string">'bar.txt'</span>
+
+$ <span class="token function">git</span> commit -a -m <span class="token string">'移除bar.txt版本控制'</span>
+
+<span class="token comment"># 移除类型文件/目录版本控制</span>
+$ <span class="token function">git</span> <span class="token function">rm</span> log/<span class="token punctuation">\</span>*.log
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h1 id="文件重命名"><a href="#文件重命名" class="header-anchor">#</a> 文件重命名</h1> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">dir</span>
+bar.txt  test.txt
+
+$ <span class="token function">git</span> <span class="token function">mv</span> test.txt flus.txt
+
+$ <span class="token function">dir</span>
+bar.txt  flus.txt
+
+$ <span class="token function">git</span> status
+On branch develop
+Your branch is ahead of <span class="token string">'origin/develop'</span> by <span class="token number">6</span> commits.
+  <span class="token punctuation">(</span>use <span class="token string">&quot;git push&quot;</span> to publish your <span class="token builtin class-name">local</span> commits<span class="token punctuation">)</span>
+Changes to be committed:
+  <span class="token punctuation">(</span>use <span class="token string">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="token punctuation">)</span>
+
+        renamed:    test.txt -<span class="token operator">&gt;</span> flus.txt
+
+<span class="token comment">#其实，运行 git mv 就相当于运行了下面三条命令：</span>
+$ <span class="token function">mv</span> README.txt README
+$ <span class="token function">git</span> <span class="token function">rm</span> README.txt
+$ <span class="token function">git</span> <span class="token function">add</span> README
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div></div> <span id="footerPost" data-v-95d4b5b2></span></div> <div id="post-toc" class="post-toc el-col el-col-6" data-v-95d4b5b2><h4 class="catalog-title" data-v-95d4b5b2>TOC</h4> <div class="catalog-body" data-v-95d4b5b2><ul id="catalog-list" class="catalog-list" data-v-95d4b5b2></ul></div></div></div> <div class="post-nav el-row is-justify-space-around el-row--flex" data-v-95d4b5b2><div class="post-prev el-col el-col-7" data-v-95d4b5b2></div> <div class="post-next el-col el-col-7 el-col-lg-pull-5" data-v-95d4b5b2><div data-v-95d4b5b2><a href="/posts/%E5%88%9B%E5%BB%BA%E5%9C%86%E5%A4%B4%E7%9F%A9%E5%BD%A2.html" data-v-95d4b5b2>
+          Next
+          <i class="el-icon-arrow-right" data-v-95d4b5b2></i></a> <p class="nav-title" data-v-95d4b5b2>创建圆头矩形</p></div></div></div> <div class="el-row is-justify-center el-row--flex" data-v-95d4b5b2></div> <span data-v-d999c3f2 data-v-95d4b5b2><button type="button" class="el-button toc-btn el-button--primary is-circle" data-v-d999c3f2><!----><!----><span><i class="iconfont icon-service-directory" data-v-d999c3f2></i></span></button> <button type="button" class="el-button gotop-btn el-button--primary is-circle" data-v-d999c3f2><!----><!----><span><i class="el-icon-arrow-up" data-v-d999c3f2></i></span></button></span></div></main></section> <button type="button" class="el-button gotop-btn el-button--primary is-circle" style="display:none;" data-v-78a2dcfa data-v-80d5f2bc><!----><!----><span><i class="el-icon-arrow-up" data-v-78a2dcfa></i></span></button></section> <footer class="el-footer container-footer" style="height:60px;" data-v-76c50ee3 data-v-80d5f2bc><div class="footer-warp el-row is-justify-center is-align-center el-row--flex footerMargin" data-v-76c50ee3><div class="footer-top el-col el-col-24" data-v-76c50ee3><p class="ellipsis" data-v-76c50ee3><span data-v-76c50ee3>
+          博客内容遵循
+          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" data-v-76c50ee3>知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span></p></div> <div class="footer-bottom el-col el-col-24" data-v-76c50ee3><p class="ellipsis" data-v-76c50ee3><span data-v-76c50ee3><span data-v-76c50ee3>
+            墨荷清香 © 2020-01 ~ 2020-01
+          </span></span> <span data-v-76c50ee3>
+          Power by
+          <a href="https://vuepress.vuejs.org/zh/" target="_blank" data-v-76c50ee3>VuePress</a> Theme
+          <a href="https://github.com/zhhlwd/vuepress-theme-indigo-material" target="_blank" data-v-76c50ee3>indigo material</a></span></p></div></div></footer> <div class="overlay" data-v-80d5f2bc></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.9d3769a1.js" defer></script><script src="/assets/js/1.72ee6602.js" defer></script><script src="/assets/js/14.1ccc8c33.js" defer></script><script src="/assets/js/5.20baaa8b.js" defer></script><script src="/assets/js/7.4033df73.js" defer></script><script src="/assets/js/9.021ec998.js" defer></script><script src="/assets/js/6.0dbd97d1.js" defer></script><script src="/assets/js/23.5962dad2.js" defer></script><script src="/assets/js/13.2ece30a8.js" defer></script><script src="/assets/js/15.ecd9751b.js" defer></script>
+  </body>
+</html>
