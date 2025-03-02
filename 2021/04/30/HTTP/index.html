@@ -500,7 +500,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh">&gt; traceroute www.baidu.com<br>traceroute: Warning: www.baidu.com has multiple addresses; using 180.101.49.12<br>traceroute to www.a.shifen.com (180.101.49.12), 64 hops max, 52 byte packets<br> 1  30.73.26.254 (30.73.26.254)  2.867 ms  2.219 ms  1.861 ms<br> 2  30.73.2.73 (30.73.2.73)  0.669 ms  0.657 ms  0.353 ms<br> 3  30.73.1.69 (30.73.1.69)  5.739 ms  2.262 ms  2.009 ms<br> 4  30.73.1.134 (30.73.1.134)  0.795 ms  0.725 ms  0.757 ms<br> 5  30.73.1.5 (30.73.1.5)  5.567 ms  2.629 ms  2.556 ms<br> 6  45.112.221.193 (45.112.221.193)  9.447 ms  9.271 ms<br> ...<br></code></pre></td></tr></table></figure>
 <p>上面的命令行输出中，每一个路由设备都会产生一行记录。程序利用增加存活时间（TTL&#x2F;跳转计数&#x2F;跳）值来实现其功能。每当数据包经过一个路由器，其存活时间就会减1。当其存活时间是0时，主机便取消数据包，并传送一个ICMP TTL数据包给原数据包的发出者。</p>
 <h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><p>网络诊断工具，检测主机之间通信是否正常。示例：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh">&gt; ping baidu.com<br>PING baidu.com (39.156.69.79): 56 data bytes<br>64 bytes from 39.156.69.79: icmp_seq=0 ttl=48 time=27.729 ms<br>64 bytes from 39.156.69.79: icmp_seq=1 ttl=48 time=27.372 ms<br>64 bytes from 39.156.69.79: icmp_seq=2 ttl=48 time=27.403 ms<br>64 bytes from 39.156.69.79: icmp_seq=3 ttl=48 time=28.228 ms<br></code></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh">&gt; ping baidu.com<br>PING baidu.com (39.156.69.79): 56 data bytes<br>64 bytes from 39.156.69.79: icmp_seq=0 ttl=48 <span class="hljs-keyword">time</span>=27.729 ms<br>64 bytes from 39.156.69.79: icmp_seq=1 ttl=48 <span class="hljs-keyword">time</span>=27.372 ms<br>64 bytes from 39.156.69.79: icmp_seq=2 ttl=48 <span class="hljs-keyword">time</span>=27.403 ms<br>64 bytes from 39.156.69.79: icmp_seq=3 ttl=48 <span class="hljs-keyword">time</span>=28.228 ms<br></code></pre></td></tr></table></figure>
 
 
 
@@ -572,9 +572,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/05/07/code-server/" title="code-server">
+                      <a href="/2021/04/30/JavaScript/" title="JavaScript">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">code-server</span>
+                        <span class="hidden-mobile">JavaScript</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -582,8 +582,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/04/30/Docker/" title="Docker">
-                        <span class="hidden-mobile">Docker</span>
+                      <a href="/2021/04/30/box-shadow%E5%A4%A7%E6%9C%89%E5%8F%AF%E4%B8%BA/" title="box-shadow应用">
+                        <span class="hidden-mobile">box-shadow应用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
