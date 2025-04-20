@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jacksion">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="如何开始Threejs 是入门Web 3D门槛比较低的一个库。Threejs是对WebGL的一个封装实现，使开发者不必具备图形学的基础就可以进行Web 3D应用的开发。但门槛低不代表没有门槛，Threejs中提供了很多封装好的工具类，开发者必须对这些概念依依学习理解之后，才能入门开发。从Web前端开发者的角度来讲，WebGL 相较于 Threejs 的关系就像是原生JavaScript相较于JQu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Three js 学习笔记 1">
+<meta property="og:url" content="https://jacksiongt.github.io/2023/02/21/Threejs/threejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/index.html">
+<meta property="og:site_name" content="墨荷清香的博客">
+<meta property="og:description" content="如何开始Threejs 是入门Web 3D门槛比较低的一个库。Threejs是对WebGL的一个封装实现，使开发者不必具备图形学的基础就可以进行Web 3D应用的开发。但门槛低不代表没有门槛，Threejs中提供了很多封装好的工具类，开发者必须对这些概念依依学习理解之后，才能入门开发。从Web前端开发者的角度来讲，WebGL 相较于 Threejs 的关系就像是原生JavaScript相较于JQu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-21T07:50:37.000Z">
+<meta property="article:modified_time" content="2023-11-30T21:43:53.000Z">
+<meta property="article:author" content="Jacksion">
+<meta property="article:tag" content="threejs">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Three js 学习笔记 1 - 墨荷清香的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jacksiongt.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>墨荷清香的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Three js 学习笔记 1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-21 15:50" pubdate>
+          2023年2月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Three js 学习笔记 1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="如何开始"><a href="#如何开始" class="headerlink" title="如何开始"></a>如何开始</h1><p>Threejs 是入门Web 3D门槛比较低的一个库。Threejs是对WebGL的一个封装实现，使开发者不必具备图形学的基础就可以进行Web 3D应用的开发。但门槛低不代表没有门槛，Threejs中提供了很多封装好的工具类，开发者必须对这些概念依依学习理解之后，才能入门开发。<br>从Web前端开发者的角度来讲，WebGL 相较于 Threejs 的关系就像是原生JavaScript相较于JQuery。我们在能够熟练使用Threejs实现各种效果后再涉足比较底层WebGL，就能循序渐进得不断取得阶段性成就。这种相对平滑的学习曲线对我来说是比较友好的，毕竟成就感是坚持学习的最好原动力。</p>
+<h2 id="hello-cube"><a href="#hello-cube" class="headerlink" title="hello cube"></a>hello cube</h2><p>如果你想快速地写出一个在网页上旋转的立方体，并感受web3d的开发魅力。你可以从githu上下载threejs源码，并在html中引用。快速粘贴threejs官网的实力代码，就能愉快的看见hello cube了</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>threejs demo 1<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">body</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;</span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;three.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> &#123;</span><br><span class="language-javascript">            <span class="hljs-variable constant_">REVISION</span>,</span><br><span class="language-javascript">            <span class="hljs-title class_">Scene</span>,</span><br><span class="language-javascript">            <span class="hljs-title class_">PerspectiveCamera</span>,</span><br><span class="language-javascript">            <span class="hljs-title class_">WebGLRenderer</span>,</span><br><span class="language-javascript">            <span class="hljs-title class_">BoxGeometry</span>,</span><br><span class="language-javascript">            <span class="hljs-title class_">MeshBasicMaterial</span>,</span><br><span class="language-javascript">            <span class="hljs-title class_">Mesh</span></span><br><span class="language-javascript">        &#125; = <span class="hljs-variable language_">window</span>.<span class="hljs-property">THREE</span></span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> scene = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scene</span>();</span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> camera = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PerspectiveCamera</span>(<span class="hljs-number">75</span>, <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> / <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>, <span class="hljs-number">0.1</span>, <span class="hljs-number">1000</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> renderer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebGLRenderer</span>();</span><br><span class="language-javascript">        renderer.<span class="hljs-title function_">setSize</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span>, <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>);</span><br><span class="language-javascript">        scene.<span class="hljs-title function_">add</span>(camera);</span><br><span class="language-javascript">        <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(renderer.<span class="hljs-property">domElement</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> geometry = <span class="hljs-keyword">new</span> <span class="hljs-title class_">BoxGeometry</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);</span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> material = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MeshBasicMaterial</span>(&#123; <span class="hljs-attr">color</span>: <span class="hljs-number">0x00ff00</span> &#125;);</span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> cube = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Mesh</span>(geometry, material);</span><br><span class="language-javascript">        scene.<span class="hljs-title function_">add</span>(cube);</span><br><span class="language-javascript"></span><br><span class="language-javascript">        camera.<span class="hljs-property">position</span>.<span class="hljs-property">z</span> = <span class="hljs-number">5</span>;</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">function</span> <span class="hljs-title function_">animate</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            cube.<span class="hljs-property">rotation</span>.<span class="hljs-property">x</span> += <span class="hljs-number">0.005</span>;</span><br><span class="language-javascript">            cube.<span class="hljs-property">rotation</span>.<span class="hljs-property">y</span> += <span class="hljs-number">0.005</span>;</span><br><span class="language-javascript">            <span class="hljs-title function_">requestAnimationFrame</span>(animate);</span><br><span class="language-javascript">            renderer.<span class="hljs-title function_">render</span>(scene, camera);</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">        <span class="hljs-title function_">animate</span>();</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;resize&#x27;</span>, onWindowResize);</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">function</span> <span class="hljs-title function_">onWindowResize</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            camera.<span class="hljs-property">aspect</span> = <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> / <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>;</span><br><span class="language-javascript">            camera.<span class="hljs-title function_">updateProjectionMatrix</span>();</span><br><span class="language-javascript">            renderer.<span class="hljs-title function_">setSize</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span>, <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>);</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Threejs-项目"><a href="#Threejs-项目" class="headerlink" title="Threejs 项目"></a>Threejs 项目</h2><p>如果想要继续学习的话，建议使用基于前端模块化打包工具生成的项目模板开发。比如umi、parcel、vue-cli、create-react-app。这样做有以下几点好处</p>
+<ul>
+<li>这些工具只需要一行命令就能建立项目模板，开箱即用</li>
+<li>方便地使用yarn、npm、pnpm、cnpm 进行模块安装，无需繁琐地寻找下载相关依赖库</li>
+<li>框架支持热更新，一边写代码，页面能一边实时预览，所见即所得</li>
+<li>打包工具可以编译整个项目，发布方便</li>
+</ul>
+<p>主要还是前3点，在学习过程中能够给我们极大的方便和助力，让我们专注库的学习。如果你不熟悉上面任何一款打包框架，建议花一点时间学习一下，只需了解如何使用即可。</p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul>
+<li>安装node，npm，这是打包依赖运行环境</li>
+<li>安装框架命令行工具</li>
+</ul>
+<p>下面以umi为例简单演示相关步骤</p>
+<ul>
+<li><p>打开命令行（cmd&#x2F;iterm），按照<a target="_blank" rel="noopener" href="https://v3.umijs.org/zh-CN/docs/getting-started">umi文档</a>新建项目</p>
+</li>
+<li><p>在src下新建component&#x2F;dmeo1&#x2F;index.js，并写入以下代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-variable constant_">THREE</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;three&#x27;</span>;<br><br><span class="hljs-keyword">const</span> &#123;<br>    <span class="hljs-variable constant_">REVISION</span>,<br>    <span class="hljs-title class_">Scene</span>,<br>    <span class="hljs-title class_">PerspectiveCamera</span>,<br>    <span class="hljs-title class_">WebGLRenderer</span>,<br>    <span class="hljs-title class_">BoxGeometry</span>,<br>    <span class="hljs-title class_">MeshBasicMaterial</span>,<br>    <span class="hljs-title class_">Mesh</span><br>&#125; = <span class="hljs-variable constant_">THREE</span><br><br><span class="hljs-keyword">const</span> scene = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scene</span>();<br><span class="hljs-keyword">const</span> camera = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PerspectiveCamera</span>(<span class="hljs-number">75</span>, <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> / <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>, <span class="hljs-number">0.1</span>, <span class="hljs-number">1000</span>);<br><br><span class="hljs-keyword">const</span> renderer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebGLRenderer</span>();<br>renderer.<span class="hljs-title function_">setSize</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span>, <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>);<br>scene.<span class="hljs-title function_">add</span>(camera);<br><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;#box&quot;</span>).<span class="hljs-title function_">appendChild</span>(renderer.<span class="hljs-property">domElement</span>);<br><br><span class="hljs-keyword">const</span> geometry = <span class="hljs-keyword">new</span> <span class="hljs-title class_">BoxGeometry</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br><span class="hljs-keyword">const</span> material = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MeshBasicMaterial</span>(&#123; <span class="hljs-attr">color</span>: <span class="hljs-number">0x00ff00</span> &#125;);<br><span class="hljs-keyword">const</span> cube = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Mesh</span>(geometry, material);<br>scene.<span class="hljs-title function_">add</span>(cube);<br><br>camera.<span class="hljs-property">position</span>.<span class="hljs-property">z</span> = <span class="hljs-number">5</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">animate</span>(<span class="hljs-params"></span>) &#123;<br>    cube.<span class="hljs-property">rotation</span>.<span class="hljs-property">x</span> += <span class="hljs-number">0.005</span>;<br>    cube.<span class="hljs-property">rotation</span>.<span class="hljs-property">y</span> += <span class="hljs-number">0.005</span>;<br>    <span class="hljs-title function_">requestAnimationFrame</span>(animate);<br>    renderer.<span class="hljs-title function_">render</span>(scene, camera);<br>&#125;<br><span class="hljs-title function_">animate</span>();<br><br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;resize&#x27;</span>, onWindowResize);<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">onWindowResize</span>(<span class="hljs-params"></span>) &#123;<br>    camera.<span class="hljs-property">aspect</span> = <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> / <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>;<br>    camera.<span class="hljs-title function_">updateProjectionMatrix</span>();<br>    renderer.<span class="hljs-title function_">setSize</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span>, <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>打开src&#x2F;page&#x2F;index.tsx 修改代码为下面的代码</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;@/component/demo1&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">IndexPage</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>打开命令行，执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装threejs依赖库</span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">npm i three -S</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动项目</span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">npm start</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动浏览器预览应用</span><br>start http://localhost:8000/<br></code></pre></td></tr></table></figure></li>
+<li><p>现在你应该在页面中看到一个旋转的正方体</p>
+</li>
+</ul>
+<h2 id="道阻且长"><a href="#道阻且长" class="headerlink" title="道阻且长"></a>道阻且长</h2><p>能跑起来demo还是很有成就感的，后面就是学习Threejs的各种概念，须戒骄戒躁。不积跬步无以至千里，不积小流无以成江海。Threejs的概念相对不是很多，跟着官方示例一步一步来就行了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/threejs/" class="print-no-link">#threejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Three js 学习笔记 1</div>
+      <div>https://jacksiongt.github.io/2023/02/21/Threejs/threejs学习笔记1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jacksion</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/21/Threejs/%E7%AC%94%E8%AE%B02/" title="Three js 学习笔记 2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Three js 学习笔记 2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/12/CookieAndSession/" title="Cookie 和 Session">
+                        <span class="hidden-mobile">Cookie 和 Session</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

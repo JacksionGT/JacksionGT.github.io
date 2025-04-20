@@ -1,0 +1,668 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jacksion">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Visual Studio Code OnlineVisual Studio Code是微软推出的基于[Nodejs + Electron]的免费开源适配多端的代码编辑器。一个字牛B！让人爱不释手的原因有但不只有以下几点  基于Nodejs - 前端开发者友好的 开源 - 可以定制 适配多端 - 客户端&#x2F;网页版  本文介绍如何将 Visual Studio Code 部署在服务器上，并使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="code-server">
+<meta property="og:url" content="https://jacksiongt.github.io/2021/05/07/code-server/index.html">
+<meta property="og:site_name" content="墨荷清香的博客">
+<meta property="og:description" content="Visual Studio Code OnlineVisual Studio Code是微软推出的基于[Nodejs + Electron]的免费开源适配多端的代码编辑器。一个字牛B！让人爱不释手的原因有但不只有以下几点  基于Nodejs - 前端开发者友好的 开源 - 可以定制 适配多端 - 客户端&#x2F;网页版  本文介绍如何将 Visual Studio Code 部署在服务器上，并使">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-07T10:35:46.000Z">
+<meta property="article:modified_time" content="2022-10-12T07:29:51.000Z">
+<meta property="article:author" content="Jacksion">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>code-server - 墨荷清香的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jacksiongt.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>墨荷清香的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="code-server"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-05-07 18:35" pubdate>
+          2021年5月7日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">code-server</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Visual-Studio-Code-Online"><a href="#Visual-Studio-Code-Online" class="headerlink" title="Visual Studio Code Online"></a>Visual Studio Code Online</h1><p>Visual Studio Code是微软推出的基于[Nodejs + Electron]的免费开源适配多端的代码编辑器。一个字牛B！让人爱不释手的原因有但不只有以下几点</p>
+<ul>
+<li>基于Nodejs - 前端开发者友好的</li>
+<li>开源 - 可以定制</li>
+<li>适配多端 - 客户端&#x2F;网页版</li>
+</ul>
+<p>本文介绍如何将 Visual Studio Code 部署在服务器上，并使用浏览器访问它。接着你就可以方便地 coding anywhere。</p>
+<h1 id="code-server"><a href="#code-server" class="headerlink" title="code-server"></a>code-server</h1><p>由于<a target="_blank" rel="noopener" href="https://github.com/microsoft/vscode">Visual Studio Code</a>编译部署<a target="_blank" rel="noopener" href="https://github.com/microsoft/vscode/wiki/How-to-Contribute#build-and-run">web版本</a>具有一定的复杂性，而且在不同环境下编译部署有时候会出现层出不穷的问题。于是<a target="_blank" rel="noopener" href="https://github.com/cdr/code-server">code-server</a>应运而生。</p>
+<p>使用<code>code-server</code>可以更方便更容易部署Visual Studio Code浏览器版本。</p>
+<h1 id="code-server-环境需求"><a href="#code-server-环境需求" class="headerlink" title="code-server 环境需求"></a>code-server 环境需求</h1><h2 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h2><p>下面是官方给出的<a target="_blank" rel="noopener" href="https://github.com/cdr/code-server#requirements">推荐服务器配置</a></p>
+<blockquote>
+<p>For a good experience, we recommend at least:<br><br>1 GB of RAM<br><br>2 cores</p>
+</blockquote>
+<p>笔者演示安装的服务环境为</p>
+<ul>
+<li><code>centos 7.6</code></li>
+<li>1核心 2GB腾讯云轻应用服务器</li>
+</ul>
+<h2 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h2><p>对于下面亮点，是我踩过坑的。如果不满足的话，会导致失败或者需要多次重试。</p>
+<ul>
+<li>服务器node版本高于node v12</li>
+<li>能够流畅访问github静态资源</li>
+</ul>
+<h3 id="git-host"><a href="#git-host" class="headerlink" title="git host"></a>git host</h3><p>设置host优化下载速度</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 修改hosts文件</span><br>&gt; vim /etc/hosts<br><span class="hljs-comment"># 加入以下内容</span><br><br><span class="hljs-comment"># GitHub Start</span><br><span class="hljs-comment"># from https://github.com/ButterAndButterfly/GithubHost</span><br><span class="hljs-comment"># Last update at 2021-03-17 05:04:39 (Machine Local Time)</span><br>140.82.112.6 api.github.com<br>185.199.110.153 assets-cdn.github.com<br>185.199.110.133 avatars.githubusercontent.com<br>185.199.110.133 avatars0.githubusercontent.com<br>185.199.108.133 camo.githubusercontent.com<br>185.199.109.133 cloud.githubusercontent.com<br>140.82.113.9 codeload.github.com<br>185.199.108.133 favicons.githubusercontent.com<br>140.82.114.4 gist.github.com<br>185.199.108.133 gist.githubusercontent.com<br>140.82.114.4 github.com<br>185.199.108.154 github.githubassets.com<br>185.199.109.133 marketplace-screenshots.githubusercontent.com<br>140.82.114.3 octocaptcha.com<br>185.199.110.133 raw.githubusercontent.com<br>185.199.108.133 repository-images.githubusercontent.com<br>140.82.112.13 uploads.github.com<br>185.199.108.133 user-images.githubusercontent.com<br><span class="hljs-comment"># GitHub End</span><br><br></code></pre></td></tr></table></figure>
+
+
+<h1 id="安装示例"><a href="#安装示例" class="headerlink" title="安装示例"></a>安装示例</h1><h2 id="安装Nodejs"><a href="#安装Nodejs" class="headerlink" title="安装Nodejs"></a>安装Nodejs</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 下载node-v14发行版linux amd版本二进制包</span><br>&gt; weget https://npm.taobao.org/mirrors/node/v14.16.0/node-v14.16.0-linux-x64.tar.xz<br><br><span class="hljs-comment"># 解压文件</span><br>&gt; xz -d node-v14.16.0-linux-x64.tar.xz<br>&gt; tar xvf node-v14.16.0-linux-x64.tar<br><br><span class="hljs-comment"># 移动至目标安装目录</span><br>&gt; <span class="hljs-built_in">mv</span> ./node-v14.16.0-linux-x64 /opt/node-v14.16.0<br><br><span class="hljs-comment"># 激活全局命令</span><br>&gt; <span class="hljs-built_in">export</span> NODE_HOME=/opt/node-v14.16.0<br>&gt; <span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$NODE_HOME</span>/bin:<span class="hljs-variable">$PATH</span><br><br><span class="hljs-comment"># 验证安装</span><br>&gt; node -v<br>v14.16.0<br>&gt; npm -v<br>6.13.4<br></code></pre></td></tr></table></figure>
+<h2 id="安装code-server"><a href="#安装code-server" class="headerlink" title="安装code-server"></a>安装code-server</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p><a target="_blank" rel="noopener" href="https://github.com/cdr/code-server/releases">Releases版本列表</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 登录远程服务器</span><br><span class="hljs-comment"># 从github上下载程序程序包，请根据系统选择下载相应的版本</span><br>&gt; wget https://github.com/cdr/code-server/releases/download/v3.9.1/code-server-3.9.1-amd64.rpm<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 安装</span><br>&gt; <span class="hljs-built_in">sudo</span> yum install ./code-server-3.9.1-amd64.rpm -y<br></code></pre></td></tr></table></figure>
+
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>yum 安装成功会在全局注册 <code>code-serve</code> 命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 验证程序能否启动</span><br>&gt; code-server<br>[2021-03-18T10:47:26.763Z] info  code-server 3.9.1 e0203f2a36c9b7036fefa50eec6cf8fa36c5c015<br>[2021-03-18T10:47:26.764Z] info  Using user-data-dir ~/.local/share/code-server<br>[2021-03-18T10:47:26.781Z] info  Using config file ~/.config/code-server/config.yaml<br>[2021-03-18T10:47:26.781Z] info  HTTP server listening on http://127.0.0.1:8080 <br>[2021-03-18T10:47:26.781Z] info    - Authentication is disabled <br>[2021-03-18T10:47:26.781Z] info    - Not serving HTTPS <br></code></pre></td></tr></table></figure>
+
+<p>像上面这样的日志，便是code-server成功启动了。日志表示出code-server的工作情况</p>
+<ul>
+<li>默认工作目录： <code>~/.local/share/code-server</code></li>
+<li>生成了默认配置文件：~&#x2F;.config&#x2F;code-server&#x2F;config.yaml</li>
+</ul>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>这一步是可选的，code-server会默认启动在8080端口，并且设置开启【输入密码才能使用】。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># [可选]修改配置，使用vi编辑器修改配置</span><br>&gt; vi ~/.config/code-server/config.yaml<br><br><br><span class="hljs-comment"># 按a进入插入模式</span><br>bind-addr: 127.0.0.1:8080<br><span class="hljs-comment"># auth: password</span><br><span class="hljs-comment"># password: 036fefa50eec6cf8fa36c5c015</span><br>auth: none<br>cert: <span class="hljs-literal">false</span><br><br><span class="hljs-comment"># 编辑完成按ESC，输入:wq，推出编辑器</span><br><br><span class="hljs-comment"># 注册服务并启动服务</span><br><span class="hljs-comment"># @user为启动code-server的用户，为了避免权限滥用不建议使用 code-server@root</span><br>&gt; <span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now code-server@lighthouse<br><br><span class="hljs-comment"># 服务器设置完成</span><br>&gt; <span class="hljs-built_in">logout</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 返回本机，打开终端</span><br><br><span class="hljs-comment"># 本地ssh映射code-server服务</span><br><span class="hljs-comment"># eg：ssh -N -L (本机端口):(远程服务器端口) (linux用户名)@(服务器IP地址)</span><br><span class="hljs-comment"># eg：ssh -N -L 8082:127.0.0.1:8080 [user]@&lt;instance-ip&gt;</span><br><span class="hljs-comment"># -N disables executing a remote shell</span><br><br>&gt; ssh -N -L 8082:127.0.0.1:8080 lighthouse@3.135.61.1<br><br><span class="hljs-comment"># 输入密码后，打开本地浏览器访问 localhost:8080</span><br><br></code></pre></td></tr></table></figure>
+<h2 id="配置服务和自启动"><a href="#配置服务和自启动" class="headerlink" title="配置服务和自启动"></a>配置服务和自启动</h2><p>使用<code>which</code>命令找到<code>code-server</code>命令在全局的位置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">&gt; <span class="hljs-built_in">which</span> code-server<br></code></pre></td></tr></table></figure>
+<p>创建service文件，附上<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-the-code-server-cloud-ide-platform-on-ubuntu-18-04-quickstart">参考链接</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs sh">// 进入系统服务文件目录<br>&gt; <span class="hljs-built_in">cd</span> /usr/lib/systemd/system<br><br>// 创建service文件<br>&gt; <span class="hljs-built_in">sudo</span> vim code-server.service<br><br>// 刷新系统服务列表<br>&gt; systemctl daemon-reload<br><br>// 查询service文件<br>&gt; systemctl list-unit-files | grep code<br><br>// 以服务方式启动code-server<br>&gt; <span class="hljs-built_in">sudo</span> systemctl start code-server<br><br>// 查看服务状态<br>&gt; systemctl list-units | grep code<br><br>// 停止服务<br>&gt; <span class="hljs-built_in">sudo</span> systemctl stop code-server<br><br>// 启用开机自启<br>&gt; <span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> code-server<br><br>// 禁用开机自启<br>&gt; <span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">disable</span> code-server<br></code></pre></td></tr></table></figure>
+
+
+<p>演示<code>service文件</code>内容如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">Description</span>=code-server<br><span class="hljs-attr">After</span>=nginx.service<br><br><span class="hljs-section">[Service]</span><br><span class="hljs-attr">User</span>=[code-server登录用户]<br><span class="hljs-attr">Group</span>=[code-server登录用户所在用户组]<br><span class="hljs-attr">Type</span>=simple<br><span class="hljs-attr">ExecStart</span>=/usr/bin/code-server --config [你的code-server配置文件路径]<br><span class="hljs-attr">Restart</span>=always<br><br><span class="hljs-section">[Install]</span><br><span class="hljs-attr">WantedBy</span>=multi-user.target<br></code></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/vscode">Visual Studio Code</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cdr/code-server">code-server</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cdr/code-server/blob/main/docs/guide.md">code-server配置指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cdr/code-server/blob/main/docs/install.md#arch-linux">code-server安装指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cdr/code-server/releases">code-server 各版本安装文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ButterAndButterfly/GithubHost">github host 更新</a></li>
+</ul>
+<h2 id="其他应用"><a href="#其他应用" class="headerlink" title="其他应用"></a>其他应用</h2><p>Github 代码在线在vscode中打开<br>例如：<br><a target="_blank" rel="noopener" href="https://github.com/Leslin/thinkphp5-restfulapi">https://github.com/Leslin/thinkphp5-restfulapi</a><br>改为：<br><a target="_blank" rel="noopener" href="https://github1s.com/Leslin/thinkphp5-restfulapi">https://github1s.com/Leslin/thinkphp5-restfulapi</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7/" class="print-no-link">#工具</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>code-server</div>
+      <div>https://jacksiongt.github.io/2021/05/07/code-server/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jacksion</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年5月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/12/%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0/" title="如何学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">如何学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/30/Docker/" title="Docker">
+                        <span class="hidden-mobile">Docker</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

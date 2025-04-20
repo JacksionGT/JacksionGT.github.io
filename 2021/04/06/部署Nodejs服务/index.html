@@ -1,0 +1,630 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jacksion">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="上线一个nodejs项目的流程 在本地测试好nodejs项目 代码上传服务器 申请域名证书 pm2 启动  本地项目实例代码以express为例， 以下index代码包含一个静态服务器的几项功能  静态文件服务，public目录下的文件可以被访问 模板，支持swig模板 支持http&#x2F;https访问123456789101112131415161718192021222324252627">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上线一个nodejs项目的流程">
+<meta property="og:url" content="https://jacksiongt.github.io/2021/04/06/%E9%83%A8%E7%BD%B2Nodejs%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="墨荷清香的博客">
+<meta property="og:description" content="上线一个nodejs项目的流程 在本地测试好nodejs项目 代码上传服务器 申请域名证书 pm2 启动  本地项目实例代码以express为例， 以下index代码包含一个静态服务器的几项功能  静态文件服务，public目录下的文件可以被访问 模板，支持swig模板 支持http&#x2F;https访问123456789101112131415161718192021222324252627">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-06T09:09:27.000Z">
+<meta property="article:modified_time" content="2022-10-12T08:48:56.000Z">
+<meta property="article:author" content="Jacksion">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>上线一个nodejs项目的流程 - 墨荷清香的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jacksiongt.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>墨荷清香的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="上线一个nodejs项目的流程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-06 17:09" pubdate>
+          2021年4月6日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          81 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">上线一个nodejs项目的流程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="上线一个nodejs项目的流程"><a href="#上线一个nodejs项目的流程" class="headerlink" title="上线一个nodejs项目的流程"></a>上线一个nodejs项目的流程</h1><ul>
+<li>在本地测试好nodejs项目</li>
+<li>代码上传服务器</li>
+<li>申请域名证书</li>
+<li>pm2 启动</li>
+</ul>
+<h1 id="本地项目实例代码"><a href="#本地项目实例代码" class="headerlink" title="本地项目实例代码"></a>本地项目实例代码</h1><p>以<code>express</code>为例， 以下index代码包含一个静态服务器的几项功能</p>
+<ul>
+<li>静态文件服务，public目录下的文件可以被访问</li>
+<li>模板，支持swig模板</li>
+<li>支持http&#x2F;https访问<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">const</span> swig = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;swig&#x27;</span>);<br><br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><br><span class="hljs-comment">// 利用express.static中间件来托管静态资源。</span><br>app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;public&#x27;</span>)));<br><br><span class="hljs-comment">// ----------------- 模板引擎 -------------------------</span><br><span class="hljs-comment">//使用swig渲染html文件</span><br>app.<span class="hljs-title function_">engine</span>(<span class="hljs-string">&#x27;html&#x27;</span>, swig.<span class="hljs-property">renderFile</span>);<br><br><span class="hljs-comment">//设置默认页面扩展名</span><br>app.<span class="hljs-title function_">set</span>(<span class="hljs-string">&#x27;view engine&#x27;</span>, <span class="hljs-string">&#x27;html&#x27;</span>);<br><br><span class="hljs-comment">//设置模板编译无缓存</span><br>app.<span class="hljs-title function_">set</span>(<span class="hljs-string">&#x27;view cache&#x27;</span>, <span class="hljs-literal">false</span>);<br><br><span class="hljs-comment">//设置项目的页面文件，也就是html文件的位置</span><br>app.<span class="hljs-title function_">set</span>(<span class="hljs-string">&#x27;views&#x27;</span>, path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;views&#x27;</span>));<br><br>swig.<span class="hljs-title function_">setDefaults</span>(&#123;<br>    <span class="hljs-comment">//关闭swig模板缓存</span><br>    <span class="hljs-attr">cache</span>: <span class="hljs-string">&#x27;memory&#x27;</span>,<br><br>    <span class="hljs-comment">//从文件载入模板，请写绝对路径，不要使用相对路径</span><br>    <span class="hljs-attr">loader</span>: swig.<span class="hljs-property">loaders</span>.<span class="hljs-title function_">fs</span>(__dirname + <span class="hljs-string">&#x27;/views&#x27;</span>)<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>    res.<span class="hljs-title function_">render</span>(<span class="hljs-string">&#x27;index&#x27;</span>);<br>&#125;)<br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/p2&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>    res.<span class="hljs-title function_">render</span>(<span class="hljs-string">&#x27;p2&#x27;</span>);<br>&#125;)<br><br><span class="hljs-keyword">const</span> port = <span class="hljs-number">8888</span>;<br><br>app.<span class="hljs-title function_">listen</span>(port, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`start: http://localhost:<span class="hljs-subst">$&#123;port&#125;</span>/`</span>)<br>&#125;) <br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="上传代码"><a href="#上传代码" class="headerlink" title="上传代码"></a>上传代码</h1><p>代码上传路径： <code>/usr/local/src/website/app</code></p>
+<h1 id="pm2-启动项目"><a href="#pm2-启动项目" class="headerlink" title="pm2 启动项目"></a>pm2 启动项目</h1><p>pm2 基本使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">转到项目根目录下</span><br>cd /usr/local/src/website/app<br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动项目几种方式</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">直接启动</span><br>pm2 start index.js<br><span class="hljs-meta prompt_"># </span><span class="language-bash">监听启动</span><br>pm2 start index.js --watch<br><span class="hljs-meta prompt_"># </span><span class="language-bash">多线程启动</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">-i 线程数，max为最大</span><br>pm2 start index.js --watch -i max<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看项目状态</span><br>pm2 list<br>┌─────┬──────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐<br>│ id  │ name     │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │<br>├─────┼──────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤<br>│ 0   │ index    │ default     │ 1.0.0   │ fork    │ 16884    │ 46m    │ 22   │ online    │ 0%       │ 42.9mb   │ root     │ disabled │<br>└─────┴──────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">停止项目</span><br>pm2 stop index.js<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重启项目</span><br>pm2 restart index.js<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除项目</span><br>pm2 delete 0<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">全局安装</span><br>npm i pm2 -g<br><br></code></pre></td></tr></table></figure>
+
+
+<h1 id="acme-申请Let’s-Encrypt免费证书"><a href="#acme-申请Let’s-Encrypt免费证书" class="headerlink" title="acme 申请Let’s Encrypt免费证书"></a>acme 申请Let’s Encrypt免费证书</h1><p>以 <code>example.com</code> 域名为例，申请通配符证书。在</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装acme客户端</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">email 换成自己的邮箱</span><br>curl https://get.acme.sh | sh -s email=my@example.com<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成证书</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">-d 参数为 二级域名/三级域名</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">--webroot 为站点静态服务根目录</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">acme客户端在申请证书的过程中会动态创建用于验证的文件，并在申请证书结束后删除</span><br>acme.sh --issue -d example.com -d www.example.com --webroot /usr/local/src/website/app/puclic<br><br>[Wed Oct 12 02:25:58 EDT 2022] Using CA: https://acme.zerossl.com/v2/DV90<br>[Wed Oct 12 02:25:58 EDT 2022] Multi domain=&#x27;DNS:jpfinance.vip,DNS:www.jpfinance.vip&#x27;<br>[Wed Oct 12 02:25:58 EDT 2022] Getting domain auth token for each domain<br>[Wed Oct 12 02:26:06 EDT 2022] Getting webroot for domain=&#x27;jpfinance.vip&#x27;<br>[Wed Oct 12 02:26:06 EDT 2022] Getting webroot for domain=&#x27;www.jpfinance.vip&#x27;<br>[Wed Oct 12 02:26:06 EDT 2022] Verifying: jpfinance.vip<br>[Wed Oct 12 02:26:10 EDT 2022] Processing, The CA is processing your order, please just wait. (1/30)<br>[Wed Oct 12 02:26:17 EDT 2022] Success<br>[Wed Oct 12 02:26:17 EDT 2022] Verifying: www.jpfinance.vip<br>[Wed Oct 12 02:26:21 EDT 2022] Processing, The CA is processing your order, please just wait. (1/30)<br>[Wed Oct 12 02:26:25 EDT 2022] Processing, The CA is processing your order, please just wait. (2/30)<br>[Wed Oct 12 02:26:30 EDT 2022] Processing, The CA is processing your order, please just wait. (3/30)<br>[Wed Oct 12 02:26:35 EDT 2022] Success<br>[Wed Oct 12 02:26:35 EDT 2022] Verify finished, start to sign.<br>[Wed Oct 12 02:26:35 EDT 2022] Lets finalize the order.<br>[Wed Oct 12 02:26:35 EDT 2022] Le_OrderFinalize=&#x27;https://acme.zerossl.com/v2/DV90/order/_33Hij4Qf6fFsvhQLjjQ_g/finalize&#x27;<br>[Wed Oct 12 02:26:37 EDT 2022] Order status is processing, lets sleep and retry.<br>[Wed Oct 12 02:26:37 EDT 2022] Retry after: 15<br>[Wed Oct 12 02:26:53 EDT 2022] Polling order status: https://acme.zerossl.com/v2/DV90/order/_33Hij4Qf6fFsvhQLjjQ_g<br>[Wed Oct 12 02:26:55 EDT 2022] Downloading cert.<br>[Wed Oct 12 02:26:55 EDT 2022] Le_LinkCert=&#x27;https://acme.zerossl.com/v2/DV90/cert/dUv6k0tSCC4ONCslRI5QEw&#x27;<br>[Wed Oct 12 02:26:56 EDT 2022] Cert success.<br>-----BEGIN CERTIFICATE-----<br>MIIGfDCCBGSgAwIBAgIRAIP+hbhLSgKwKWRR+p0F5gEwDQYJKoZIhvcNAQEMBQAw<br>SzELMAkGA1UEBhMCQVQxEDAOBgNVBAoTB1plcm9TU0wxKjAoBgNVBAMTIVplcm9T<br>U0wgUlNBIERvbWFpbiBTZWN1cmUgU2l0ZSBDQTAeFw0yMjEwMTIwMDAwMDBaFw0y<br>MzAxMTAyMzU5NTlaMBgxFjAUBgNVBAMTDWpwZmluYW5jZS52aXAwggEiMA0GCSqG<br>SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDd714oy696nHRhz0qQnnBbuxcBIVHVawjm<br>jRLxpmwEoFKl2CaVpXDmAfSwMMagLslK9KpZtkZPu/aGcOdoGRHVTIIl2CPZBoNe<br>e+tZl1wK6P/ibXtlxR7cYASZd52Hj5C883mspj8baoC/wIlV69o2f1HPhYwQSFIE<br>QZqikBtYNkJn+E/GLgfe+3FPs7zAKTPauL0EwnCg0zLsHC+ok0ToElSyqDUrIXau<br>X7qdouKWor5B2Z8+nTH3rRVgAUOmrIelgarnnm9vf6OCzG85Z1nHXR6+aQf90uHC<br>M6J/OXyGsZUnRRfP4bhNlO9nlEuZkk28FXm+d04MMyB4kMjffQtHAgMBAAGjggKM<br>MIICiDAfBgNVHSMEGDAWgBTI2XhootkZaNU9ct5fCj7ctYaGpjAdBgNVHQ4EFgQU<br>fjGu2rUIfeQH+5Ok5TYA18UfMA0wDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQC<br>MAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMEkGA1UdIARCMEAwNAYL<br>KwYBBAGyMQECAk4wJTAjBggrBgEFBQcCARYXaHR0cHM6Ly9zZWN0aWdvLmNvbS9D<br>UFMwCAYGZ4EMAQIBMIGIBggrBgEFBQcBAQR8MHowSwYIKwYBBQUHMAKGP2h0dHA6<br>Ly96ZXJvc3NsLmNydC5zZWN0aWdvLmNvbS9aZXJvU1NMUlNBRG9tYWluU2VjdXJl<br>U2l0ZUNBLmNydDArBggrBgEFBQcwAYYfaHR0cDovL3plcm9zc2wub2NzcC5zZWN0<br>aWdvLmNvbTCCAQQGCisGAQQB1nkCBAIEgfUEgfIA8AB2AK33vvp8/xDIi509nB4+<br>GGq0Zyldz7EMJMqFhjTr3IKKAAABg8rfrccAAAQDAEcwRQIhAPdvrEdlpr1wCe5H<br>kp/9CciYTo9FJjHIh//mNB8JJz14AiBZV6BDSUbq3B9JK/Y+bIThpK5z5StPq9oF<br>5rz2oZdRYwB2AHoyjFTYty22IOo44FIe6YQWcDIThU070ivBOlejUutSAAABg8rf<br>ragAAAQDAEcwRQIhAL5DUGT7knMNyzDHYzKbO4e1Y99dGFJ0HCRnaUpzyGZ1AiB9<br>pwC+ayvCuGO8CSQDesNse40Wx1deUhlU+t+X/1KekzArBgNVHREEJDAigg1qcGZp<br>bmFuY2UudmlwghF3d3cuanBmaW5hbmNlLnZpcDANBgkqhkiG9w0BAQwFAAOCAgEA<br>BK3epIjHwOGNL72Umj1tfVxB8L18KPVD7sT+pOewF+B9JP7Tr3Q8uZ1SxjVsUrS4<br>Wuz3GrEehNLXVft1xR+qW3P8SPhRFi/tb38Vsny4DhGBFp0SMq+G89+fRwkBtPuK<br>B0zr0zW/pe+8a6K1ajOecodpzqC8YFHKVAqkoJPo3RlinfLO84ry4gXaT2ek9KQr<br>8+uswxgbbfnRObLjTN3rP2VBRUJB+dT3r1Z3F4Ilvg+xZ4Oclj3JJHlmss3JV/Oo<br>XMxmpSlk5AjUYhsk6UYOcPjDQorDSM7JnL0M2rE1EKCyFnJR1hx8OJeCPLkEg1cx<br>8TnL4qIKSG6SgUeFZAg8beuhVqJGca0n0Z9bM0e2yIQYAeBsCmuYTeTuIh59cP41<br>5B657vfIMM11IDgMe5udUnAt9pzCgE3UkYHQwPzmApifj0vB3dLuRNUztGB6pWiu<br>DQ7auOd55bOtFxVUAkYkxF/pAAF2qruOeulmwcM1zopFztmBOSPtop2WAbBAZCn2<br>DV4aKXG/pdCuvrnpFeYUcTXRObfr2QJuObey6k/XbIRLBy6grvYOe3UCtq+P6tSA<br>k3PQmhbkh19RrYh9WRHVM283d0gbJpzEyTmk2W03MpbVMhbIa8Xdzt1oQ0XFu1kL<br>UzzBHRqg93mixLLhAbP3JMN5J0xoY24c9Aq3zNgdg1w=<br>-----END CERTIFICATE-----<br>[Wed Oct 12 02:26:56 EDT 2022] Your cert is in: /root/.acme.sh/jpfinance.vip/jpfinance.vip.cer<br>[Wed Oct 12 02:26:56 EDT 2022] Your cert key is in: /root/.acme.sh/jpfinance.vip/jpfinance.vip.key<br>[Wed Oct 12 02:26:56 EDT 2022] The intermediate CA cert is in: /root/.acme.sh/jpfinance.vip/ca.cer<br>[Wed Oct 12 02:26:56 EDT 2022] And the full chain certs is there: /root/.acme.sh/jpfinance.vip/fullchain.cer<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装证书</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">-d 为 域名</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">--key-file key文件安装路径</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">--fullchain-file 证书文件安装路径.windows 用crt证书，linux用pem cer证书</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">--reloadcmd 证书更新后，重启服务命令。可选参数，也可为pm2 添加--watch参数</span><br>acme.sh --install-cert -d jpfinance.vip \<br>--key-file       /usr/local/src/website/app/cert/server.key  \<br>--fullchain-file /usr/local/src/website/app/cert/fullchain.cer<br>--reloadcmd     &quot;pm2 restart all&quot;<br></code></pre></td></tr></table></figure>
+<p>参考 </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/itworld123/article/details/115553346">网络安全 &#x2F; crt、pem、pfx、cer、key 作用及区别</a></li>
+</ul>
+<h1 id="启用https"><a href="#启用https" class="headerlink" title="启用https"></a>启用https</h1><p>修改js程序，添加以下代码。重启pm2</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ............</span><br><span class="hljs-keyword">var</span> https = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;https&#x27;</span>);<br><span class="hljs-keyword">var</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>);<br><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br><br><span class="hljs-comment">//同步读取密钥和签名证书</span><br><span class="hljs-keyword">var</span> options = &#123;<br>    <span class="hljs-attr">key</span>:fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;./cert/server.key&#x27;</span>),<br>    <span class="hljs-attr">cert</span>:fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;./cert/server.cer&#x27;</span>)<br>&#125;<br><br><span class="hljs-comment">// ............</span><br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><br><br><br><span class="hljs-comment">// ............</span><br><span class="hljs-keyword">var</span> httpsServer = https.<span class="hljs-title function_">createServer</span>(options,app);<br><span class="hljs-keyword">var</span> httpServer = http.<span class="hljs-title function_">createServer</span>(app);<br><br><span class="hljs-keyword">const</span> httpPort = <span class="hljs-number">80</span>;<br><span class="hljs-keyword">const</span> httpsPort = <span class="hljs-number">443</span><br><br><br><span class="hljs-comment">//https监听端口</span><br>httpsServer.<span class="hljs-title function_">listen</span>(httpsPort,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`start: https://localhost:<span class="hljs-subst">$&#123;httpsPort&#125;</span>/`</span>) &#125;);<br><span class="hljs-comment">//http监听端口</span><br>httpServer.<span class="hljs-title function_">listen</span>(httpPort,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`start: http://localhost:<span class="hljs-subst">$&#123;httpPort&#125;</span>/`</span>) &#125;);<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="站点无法访问的原因"><a href="#站点无法访问的原因" class="headerlink" title="站点无法访问的原因"></a>站点无法访问的原因</h2><h3 id="域名解析未生效"><a href="#域名解析未生效" class="headerlink" title="域名解析未生效"></a>域名解析未生效</h3><p>可以利用 <a target="_blank" rel="noopener" href="https://ping.chinaz.com/">在线ping工具</a>查询站点解析是否正确，连通情况。如有解析不正确，需要登录域名管理后台修改dns解析记录。修改后的DNS解析记录不会立即生效，最迟48小时后才能在全球所有DNS服务器同步，所以期间某些地区无法访问站点是正常的。一般修改记录后1小时就可以再次使用在线ping工具验证。</p>
+<h3 id="服务端口未开放"><a href="#服务端口未开放" class="headerlink" title="服务端口未开放"></a>服务端口未开放</h3><p>端口不同有2种情况。服务器提供商一般会有安全组设置，安全组中包含端口开发和关闭的规则。服务器本身也会运行防火墙软件，默认只会开启ssh端口。要保证安全组和防火墙软件同时开发目标端口，站点才能访问。<br>参考</p>
+<ul>
+<li>linux端口状态查询<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs shell">netstat -tunlp<br>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    <br>tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      778/sshd            <br>tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      874/master          <br>tcp6       0      0 :::80                   :::*                    LISTEN      17653/node /usr/loc <br>tcp6       0      0 :::22                   :::*                    LISTEN      778/sshd            <br>tcp6       0      0 ::1:25                  :::*                    LISTEN      874/master          <br>tcp6       0      0 :::443                  :::*                    LISTEN      17653/node /usr/loc <br>udp        0      0 127.0.0.1:323           0.0.0.0:*                           450/chronyd         <br>udp6       0      0 ::1:323                 :::*                                450/chronyd  <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">ss是新的netstat</span><br>ss -tunlp<br>Netid State     Recv-Q Send-Q   Local Address:Port  Peer Address:Port              <br>udp   UNCONN     0      0       127.0.0.1:323       *:*         users:((&quot;chronyd&quot;,pid=450,fd=5))<br>udp   UNCONN     0      0       [::1]:323           [::]:*      users:((&quot;chronyd&quot;,pid=450,fd=6))<br>tcp   LISTEN     0      128     *:22                *:*         users:((&quot;sshd&quot;,pid=778,fd=3))<br>tcp   LISTEN     0      100     127.0.0.1:25        *:*         users:((&quot;master&quot;,pid=874,fd=13))<br>tcp   LISTEN     0      128     [::]:80             [::]:*      users:((&quot;node /usr/local&quot;,pid=17653,fd=21))<br>tcp   LISTEN     0      128     [::]:22             [::]:*      users:((&quot;sshd&quot;,pid=778,fd=4))<br>tcp   LISTEN     0      100     [::1]:25            [::]:*      users:((&quot;master&quot;,pid=874,fd=14))<br>tcp   LISTEN     0      128     [::]:443            [::]:*      users:((&quot;node /usr/local&quot;,pid=17653,fd=20))<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">lsof -iTCP -sTCP:LISTEN仅显示TCP状态为LISTEN的socket文件</span><br>lsof -nP -iTCP -sTCP:LISTEN<br>COMMAND   PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME<br>sshd      445     root    3u  IPv4  16434      0t0  TCP *:22 (LISTEN)<br>sshd      445     root    4u  IPv6  16445      0t0  TCP *:22 (LISTEN)<br>apache2   515     root    4u  IPv6  16590      0t0  TCP *:80 (LISTEN)<br>mysqld    534    mysql   30u  IPv6  17636      0t0  TCP *:3306 (LISTEN)<br>mysqld    534    mysql   33u  IPv6  19973      0t0  TCP *:33060 (LISTEN)<br>apache2   764 www-data    4u  IPv6  16590      0t0  TCP *:80 (LISTEN)<br>apache2   765 www-data    4u  IPv6  16590      0t0  TCP *:80 (LISTEN)<br>master    929     root   13u  IPv4  19637      0t0  TCP *:25 (LISTEN)<br></code></pre></td></tr></table></figure></li>
+<li>开放linux服务器端口<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">firewall</span><br>firewall-cmd --zone=public --add-port=1935/tcp --permanent<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">iptables</span><br>/sbin/iptables -I INPUT -p tcp --dport 8080 -j ACCEPT<br></code></pre></td></tr></table></figure>
+参考: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/sxmny/p/11224842.html">linux开放指定端口命令</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>上线一个nodejs项目的流程</div>
+      <div>https://jacksiongt.github.io/2021/04/06/部署Nodejs服务/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jacksion</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/06/%E7%99%BD%E5%AB%96%E4%BA%9A%E9%A9%AC%E9%80%8A%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="白嫖亚马逊云服务器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">白嫖亚马逊云服务器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/11/CSharp/" title="C# 代码片段">
+                        <span class="hidden-mobile">C# 代码片段</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
